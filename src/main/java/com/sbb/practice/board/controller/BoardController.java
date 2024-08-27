@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +42,18 @@ public class BoardController {
         List<Board> boardList = boardService.getAll();
         model.addAttribute("boardList", boardList);
         return "board/list";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String boardDetail(Model model,
+                              @PathVariable("id") Integer boardId) {
+
+        Board board = boardService.selectBoard(boardId);
+
+        model.addAttribute("board", board);
+
+        return "board/detail";
+
     }
 
 }
